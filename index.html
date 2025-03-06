@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>商品二维码生成器</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script> <!-- 引入二维码库 -->
   <style>
     body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
     input, button { margin: 10px; padding: 10px; }
@@ -17,6 +17,8 @@
   <input id="date" type="text" placeholder="请输入日期 (YYMMDD)">
   <button onclick="generate()">生成二维码</button>
   <div id="output"></div>
+
+  <!-- 引入自定义的 JavaScript 脚本 -->
   <script src="script.js"></script>
 </body>
 </html>
