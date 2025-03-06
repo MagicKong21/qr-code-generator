@@ -16,6 +16,13 @@ window.onload = () => {
   dateInput.value = getCurrentDateYYMMDD();
 };
 
+// 清空输出区域
+function clearOutput() {
+  const outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = ""; // 清空输出内容
+}
+
+// 主生成逻辑
 async function generate() {
   console.log("按钮被点击了");
 
@@ -41,8 +48,8 @@ async function generate() {
         throw new Error(`无法获取商品 ${goodsId} 的图片`);
       }
 
-      const imageBlob = await response.blob(); // 将图片数据转换为 Blob
-      const imageUrlObject = URL.createObjectURL(imageBlob); // 创建图片的 Blob URL
+      const imageBlob = await response.blob();
+      const imageUrlObject = URL.createObjectURL(imageBlob);
       console.log("Blob URL 被设置:", imageUrlObject);
 
       const img = new Image();
@@ -51,7 +58,6 @@ async function generate() {
       img.onload = () => {
         console.log("图片已加载，开始绘制到 canvas");
 
-        // 创建 canvas 绘制图片和二维码
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
 
@@ -72,23 +78,28 @@ async function generate() {
           }
           console.log("二维码生成成功");
 
-          // 将二维码绘制到指定位置
-          ctx.drawImage(qrCanvas, 760, 172); // 修改位置以适应图片布局
+          // 将二维码绘制到图片中
+          ctx.drawImage(qrCanvas, 760, 172);
 
-          // 将生成的图片显示在页面上
+          // 创建输出项
+          const outputItem = document.createElement("div");
+          outputItem.className = "output-item";
+
+          // 添加生成的图片
           const finalImage = document.createElement("img");
-          finalImage.src = canvas.toDataURL("image/png"); // 将 canvas 内容转换为图片数据
+          finalImage.src = canvas.toDataURL("image/png");
           finalImage.alt = `商品 ${goodsId} 的图片`;
-          outputDiv.appendChild(finalImage);
+          outputItem.appendChild(finalImage);
 
-          // 提供下载按钮
+          // 添加下载按钮
           const downloadLink = document.createElement("a");
-          downloadLink.href = canvas.toDataURL("image/png"); // 生成下载链接
-          downloadLink.download = `${dateInput}_${goodsId}.png`; // 设置下载文件名
+          downloadLink.href = canvas.toDataURL("image/png");
+          downloadLink.download = `${dateInput}_${goodsId}.png`;
           downloadLink.textContent = "下载图片";
-          downloadLink.style.display = "block";
-          downloadLink.style.marginTop = "10px";
-          outputDiv.appendChild(downloadLink);
+          outputItem.appendChild(downloadLink);
+
+          // 添加到输出区域
+          outputDiv.appendChild(outputItem);
         });
       };
     } catch (error) {
