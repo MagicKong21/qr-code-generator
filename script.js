@@ -40,7 +40,7 @@ async function generate() {
 
   for (const goodsId of goodsIds) {
     try {
-      const imageUrl = `https://union.lizhi.io/partner/product/${goodsId}/poster?cid=53qvofdc`;
+      const imageUrl = `https://union.lizhi.shop/partner/product/${goodsId}/poster?cid=53qvofdc`;
       console.log("请求的图片 URL:", imageUrl);
 
       const response = await fetch(imageUrl);
